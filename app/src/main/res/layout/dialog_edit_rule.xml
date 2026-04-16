@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="编辑规则"
+        android:textColor="#2d2a24"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editEmojiName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/input_background"
+        android:hint="🌶️ 食物名称"
+        android:padding="16dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/input_background"
+        android:hint="触发词，用逗号分隔"
+        android:padding="16dp"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/cancelBtn"
+            style="@style/DialogButton"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            style="@style/DialogButton"
+            android:text="保存"
+            android:textColor="#c29a6b" />
+
+    </LinearLayout>
+
+</LinearLayout>

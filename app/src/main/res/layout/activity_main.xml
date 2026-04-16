@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f9f7f3"
+    android:padding="4dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="32dp"
+            app:cardElevation="8dp"
+            app:cardMaxElevation="12dp"
+            app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/LL1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="🥢 吃饭灵感"
+                android:textColor="#2d2a24"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="26dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="20dp"
+                    android:background="#e6b87e" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="随便说句话 · 给你一个答案"
+                    android:textStyle="bold"
+                    android:textColor="#8b7f6e"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="4dp"
+                android:text="💬 此刻想说什么？"
+                android:textColor="#4e4539"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="26dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/userInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/input_background"
+                    android:hint="比如：今天天气真好"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:text=""
+                    android:textColor="#1f1c17"
+                    android:textColorHint="#b9ad9e"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/recommendBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/button_selector"
+                    android:text="推荐"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="✨ 试试这些"
+                android:textStyle="bold"
+                android:textColor="#7e7162"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/exampleBtn1"
+                    style="@style/ExampleButton"
+                    android:text="🌧️ 下雨湿冷" />
+
+                <Button
+                    android:id="@+id/exampleBtn2"
+                    style="@style/ExampleButton"
+                    android:text="😴 困倦" />
+
+                <Button
+                    android:id="@+id/exampleBtn3"
+                    style="@style/ExampleButton"
+                    android:text="🎉 开心" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/exampleBtn4"
+                    style="@style/ExampleButton"
+                    android:text="🥀 没胃口" />
+
+                <Button
+                    android:id="@+id/exampleBtn5"
+                    style="@style/ExampleButton"
+                    android:text="🌶️ 想吃辣" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fefcf9"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:letterSpacing="0.1"
+                        android:text="🍱 今日美食提案"
+                        android:textAllCaps="true"
+                        android:textColor="#a28d74"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/foodResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:lineSpacingExtra="8sp"
+                        android:text="沙拉碗 + 冰美式"
+                        android:textColor="#2d2a24"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/tagContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="18dp">
+
+                        <TextView
+                            android:id="@+id/tagExplanation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#6b5f50"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="—— 随便说说，灵感自来 ——"
+                android:textColor="#aa9f91"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/tagWorkshopBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/workshop_button_background"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:text="🏷️ 标签工坊"
+            android:textColor="#6b5f50"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</ScrollView>
