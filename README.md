@@ -13,3 +13,5 @@ lanage：JAVA
 Minimum SDK：API 25("Nougat";Android 7.1.1)
 
 Bulid configuration language：Groovy DSL(build.gradle)
+
+gradle：9.3.1
