@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private Button recommendBtn;
     private TextView foodResult;
     private LinearLayout tagContainer;
+    private androidx.appcompat.widget.SwitchCompat luckyModeSwitch;
     private LunchRecommender recommender;
+    private android.content.SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recommender = new LunchRecommender(this);
+        prefs = getSharedPreferences("LunchPrefs", MODE_PRIVATE);
         initViews();
         setupListeners();
         updateUI();
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         recommendBtn = findViewById(R.id.recommendBtn);
         foodResult = findViewById(R.id.foodResult);
         tagContainer = findViewById(R.id.tagContainer);
+        luckyModeSwitch = findViewById(R.id.luckyModeSwitch);
+        luckyModeSwitch.setChecked(prefs.getBoolean("luckyMode", false));
     }
 
     private void setupListeners() {
@@ -87,11 +92,21 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tagWorkshopBtn).setOnClickListener(v -> {
             startActivity(new Intent(this, TagWorkshopActivity.class));
         });
+
+        luckyModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean("luckyMode", isChecked).apply();
+        });
     }
 
     private void updateUI() {
-        String userText = userInput.getText().toString().trim();
-        RecommendationResult result = recommender.recommend(userText);
+        RecommendationResult result;
+        if (prefs.getBoolean("luckyMode", false)) {
+            result = recommender.pureRandom();
+            userInput.setText("");
+        } else {
+            String userText = userInput.getText().toString().trim();
+            result = recommender.recommend(userText);
+        }
 
         String food = result.getFood();
         foodResult.setText(food != null ? food : "🍚 黄焖鸡");
@@ -128,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if ("fallback".equals(matchedVia)) {
+        if ("lucky".equals(matchedVia)) {
+            // 灵感罐子模式不显示额外badge，文案已经在标签里了
+        } else if ("fallback".equals(matchedVia)) {
             TextView fallbackBadge = BadgeUtils.createBadge(this, "🎲 今日随机灵感");
             tagsRow.addView(fallbackBadge);
         } else if (tags == null || tags.isEmpty()) {
@@ -148,7 +165,9 @@ public class MainActivity extends AppCompatActivity {
         hintText.setTextSize(14);
         hintText.setTypeface(null, android.graphics.Typeface.ITALIC);
 
-        if ("fallback".equals(matchedVia)) {
+        if ("lucky".equals(matchedVia)) {
+            hintText.setText(" 🎰 灵感罐子为你祈福");
+        } else if ("fallback".equals(matchedVia)) {
             hintText.setText(" 没有命中关键词，为你随机选一个～");
         } else {
             hintText.setText(" 根据你的心情匹配");
@@ -162,5 +181,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         RuleManager.getInstance(this).invalidateCache();
         recommender = new LunchRecommender(this);
+        userInput.setText("");  // 清空输入
+        updateUI();  // 重新推荐，恢复到刚打开状态
     }
 }

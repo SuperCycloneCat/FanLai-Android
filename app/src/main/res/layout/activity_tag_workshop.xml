@@ -41,14 +41,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/addBtn"
+                android:id="@+id/menuBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/icon_button_selector"
                 android:padding="12dp"
-                android:text="＋ 新增"
-                android:textColor="#c29a6b"
-                android:textSize="15sp"
+                android:text="⋮"
+                android:textColor="#4e4539"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

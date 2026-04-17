@@ -41,11 +41,46 @@ public class TagWorkshopActivity extends AppCompatActivity {
 
     private void initViews() {
         TextView backBtn = findViewById(R.id.backBtn);
-        TextView addBtn = findViewById(R.id.addBtn);
         rulesRecyclerView = findViewById(R.id.rulesRecyclerView);
 
         backBtn.setOnClickListener(v -> finish());
-        addBtn.setOnClickListener(v -> showEditDialog(-1, null));
+        TextView menuBtn = findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(v -> {
+            android.widget.PopupMenu popup = new android.widget.PopupMenu(this, v);
+            popup.getMenuInflater().inflate(R.menu.workshop_menu, popup.getMenu());
+            popup.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.action_add) {
+                    showEditDialog(-1, null);
+                } else if (id == R.id.action_reset) {
+                    new AlertDialog.Builder(this)
+                            .setMessage("确定重置为默认规则吗？\n您自定义的所有规则将会丢失")
+                            .setPositiveButton("重置", (dialog, which) -> {
+                                ruleManager.resetToDefault();
+                                ruleManager.invalidateCache();  // 全局清除缓存
+                                loadData();
+                                Toast.makeText(this, "已重置为默认规则", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("取消", null)
+                            .show();
+                } else if (id == R.id.action_clear) {
+                    new AlertDialog.Builder(this)
+                            .setMessage("确定清空所有规则吗？")
+                            .setPositiveButton("清空", (dialog, which) -> {
+                                for (int i = ruleManager.getAllRules().size() - 1; i >= 0; i--) {
+                                    ruleManager.deleteRule(i);
+                                }
+                                ruleManager.invalidateCache();  // 全局清除缓存
+                                loadData();
+                                Toast.makeText(this, "已清空所有规则", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("取消", null)
+                            .show();
+                }
+                return true;
+            });
+            popup.show();
+        });
 
         rulesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -102,7 +137,7 @@ public class TagWorkshopActivity extends AppCompatActivity {
                 name = "新食物";
             }
 
-            List<String> tags = Arrays.asList(tagsStr.split(","));
+            List<String> tags = Arrays.asList(tagsStr.replace("，", ",").split(","));
             for (int i = 0; i < tags.size(); i++) {
                 tags.set(i, tags.get(i).trim());
             }
@@ -110,10 +145,10 @@ public class TagWorkshopActivity extends AppCompatActivity {
             MenuItem newItem = new MenuItem(name, tags, emoji);
             if (position == -1) {
                 ruleManager.addRule(newItem);
-                ruleManager.invalidateCache();
             } else {
                 ruleManager.updateRule(position, newItem);
             }
+            ruleManager.invalidateCache();  // 全局清除缓存
             loadData();
             Toast.makeText(this, "已保存", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
@@ -146,11 +181,12 @@ public class TagWorkshopActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(v -> {
             String text = tagsInput.getText().toString().trim();
             if (!text.isEmpty()) {
-                List<String> options = Arrays.asList(text.split(","));
+                List<String> options = Arrays.asList(text.replace("，", ",").split(","));
                 for (int i = 0; i < options.size(); i++) {
                     options.set(i, options.get(i).trim());
                 }
                 ruleManager.saveFallbackOptions(options);
+                ruleManager.invalidateCache();  // 全局清除缓存
                 loadData();
                 Toast.makeText(this, "已保存", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
@@ -210,6 +246,7 @@ public class TagWorkshopActivity extends AppCompatActivity {
                             .setMessage("确定删除此规则？")
                             .setPositiveButton("删除", (dialog, which) -> {
                                 RuleManager.getInstance(ruleHolder.itemView.getContext()).deleteRule(position);
+                                RuleManager.getInstance(ruleHolder.itemView.getContext()).invalidateCache();  // 全局清除缓存
                                 ((TagWorkshopActivity) ruleHolder.itemView.getContext()).loadData();
                                 Toast.makeText(ruleHolder.itemView.getContext(), "已删除", Toast.LENGTH_SHORT).show();
                             })
